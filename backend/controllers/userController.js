@@ -10,9 +10,10 @@ class UserController {
   // login
    async auth(req, res) {
     const cookies = req.cookies;
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });  
     }
     const { email, password } = req.body;
 
@@ -100,7 +101,27 @@ class UserController {
     
    }
   }
-}
 
+  // verify account with token
+
+  async activateAccount(req, res) {
+    const {token} =req.body;
+    if(!token) return res.status(400).json({message:"Invalid token"});
+
+ 
+    const user = jwt.verify(token, process.env.MAIL_JWT_TOKEN);
+    if(!user) return res.status(400).json({message:"Invalid token"});
+
+    const foundUser = await userModel.findById(user.id);
+    if(!foundUser) return res.status(400).json({message:"Invalid token"});
+
+    if(foundUser.verified === true){
+      return res.status(400).json({message:"Account already verified"});
+    } else{
+      await userModel.findByIdAndUpdate(user.id, {verified:true});
+      return res.status(200).json({message:"Account verified successfully"});
+    }
+}
+}
 
 export default new UserController();
