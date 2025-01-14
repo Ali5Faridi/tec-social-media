@@ -10,5 +10,6 @@ const router = express.Router();
 
 router.post("/register", registerValidator(), userController.register);
 router.post("/auth", authValidator(), userController.auth);
+router.post("/activate", userController.activateAccount);
 
 export default router;
