@@ -159,9 +159,9 @@ const userSchema = mongoose.Schema(
     }
   });
   
-//   userSchema.methods.comparePassword = async function (password) {
-//     return bcrypt.compare(password, this.password);
-//   };
+  userSchema.methods.comparePassword = async function (password) {
+    return bcrypt.compare(password, this.password);
+  };
   
   userSchema.methods.generateUsername = async function () {
     let user = null;
