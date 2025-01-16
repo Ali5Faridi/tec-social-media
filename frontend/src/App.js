@@ -1,8 +1,11 @@
-
+import {Routes, Route} from 'react-router-dom';
+import Login from '../src/pages/login/index'
 
 function App() {
   return (
-    <div className="bg-blue-400">tecSocialMedia</div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+    </Routes>
   );
 }
 
