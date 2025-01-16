@@ -3,6 +3,7 @@ import ErrorMessage from "./ErrorMessage";
 import useScreenSize from "../../hooks/screenSize";
 import * as Yup from "yup";
 import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
+import {Link} from 'react-router-dom'
 
 const LoginForm = () => {
   const { isLG } = useScreenSize();
@@ -60,13 +61,8 @@ const LoginForm = () => {
           </div>
         {/* password  */}
           <div className={`${isLG ? "" : "space-y-4"} relative`}>
-            {formik.touched.password && formik.errors.password ? (
-              <ErrorMessage
-                message={formik.errors.password}
-                position={isLG ? "left" : ""}
-                arrowDir="down"
-              />
-            ) : null}
+
+           
 
             <div className="relative">
               <input
@@ -87,8 +83,27 @@ const LoginForm = () => {
                 <ExclamationCircleIcon className="errorInfo" />
               ) : null}
             </div>
+            {formik.touched.password && formik.errors.password ? (
+              <ErrorMessage
+                message={formik.errors.password}
+                position={isLG ? "left" : ""}
+                arrowDir="up"
+              />
+            ) : null}
           </div>
+            <button disabled={!(formik.isValid && formik.dirty)}
+            className="blue-btn disabled:cursor-not-allowed disabled:opacity-70"
+            type="submit">
+                Login
+                </button>
         </form>
+        <Link to='/reset' className="block text-center text-blue-500 text-lg hover:underline p-6">
+         Forgotten password?
+        </Link>
+        <div className="divider"></div>
+        <div className="flex justify-center items-center p-4 mt-4">
+            <button className="green-btn">Create Account</button>
+        </div>
       </div>
     </div>
   );
